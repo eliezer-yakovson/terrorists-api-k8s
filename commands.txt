@@ -1,0 +1,23 @@
+# Build the Docker image
+docker build -t eliezer206568107/threat-api:v1 .  
+
+# Push the Docker image to Docker Hub
+docker push eliezer206568107/threat-api:v1   
+
+# Apply MongoDB StatefulSet
+oc apply -f k8s/mongo-statefulset.yaml
+
+# Apply MongoDB Service
+oc apply -f k8s/mongo-service.yaml
+
+# Deploy the FastAPI application
+oc apply -f k8s/api-deployment.yaml
+
+# Deploy the FastAPI Service
+oc apply -f k8s/api-service.yaml
+
+# expose the FastAPI Service
+oc expose svc/threat-api-svc  
+
+# get route
+oc get route 
